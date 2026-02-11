@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رحلة الادخار لتحقيق حلمنا</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #e8f4fd 100%);
+            min-height: 100vh;
+            padding: 20px;
+            direction: rtl;
+        }
+        
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #6b73ff;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            font-size: 14px;
+            color: #8b5cf6;
+            opacity: 0.8;
+        }
+        
+        .percentage-display {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .percentage {
+            font-size: 48px;
+            font-weight: 700;
+            color: #6b73ff;
+            text-shadow: 0 2px 10px rgba(107, 115, 255, 0.3);
+            transition: all 0.5s ease;
+        }
+        
+        .bulb-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .bulb {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #ff9999;
+            border: 4px solid #fff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .bulb.yellow {
+            background: linear-gradient(135deg, #ffd93d, #ffb347);
+            box-shadow: 0 10px 30px rgba(255, 217, 61, 0.4);
+        }
+        
+        .bulb.green {
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+            box-shadow: 0 10px 30px rgba(74, 222, 128, 0.4);
+        }
+        
+        .bulb::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 20%;
+            width: 60%;
+            height: 60%;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: rotate(-45deg);
+        }
+        
+        .progress-container {
+            margin-bottom: 30px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e5e7eb;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #6b73ff, #9333ea);
+            border-radius: 15px;
+            transition: width 0.8s ease;
+            position: relative;
+        }
+        
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .amounts-display {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 18px;
+            font-weight: 500;
+            color: #4b5563;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #374151;
+        }
+        
+        .input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 15px;
+            font-size: 16px;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+        }
+        
+        .input:focus {
+            outline: none;
+            border-color: #6b73ff;
+            box-shadow: 0 0 0 3px rgba(107, 115, 255, 0.1);
+        }
+        
+        .button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #6b73ff, #9333ea);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Tajawal', sans-serif;
+            margin-bottom: 20px;
+        }
+        
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(107, 115, 255, 0.3);
+        }
+        
+        .custom-message-group {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 15px;
+            border: 2px dashed #d1d5db;
+        }
+        
+        .message-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            text-align: center;
+            max-width: 300px;
+            width: 90%;
+            transition: all 0.3s ease;
+        }
+        
+        .message-popup.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        .message-popup .emoji {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+        
+        .message-popup .text {
+            font-size: 18px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 20px;
+        }
+        
+        .close-btn {
+            background: #6b73ff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .celebration {
+            animation: celebrate 0.6s ease;
+        }
+        
+        @keyframes celebrate {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                margin: 10px;
+                padding: 20px;
+            }
+            
+            .percentage {
+                font-size: 36px;
+            }
+            
+            .title {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">رحلة الادخار لتحقيق حلمنا</h1>
+            <p class="subtitle">كل خطوة تقرّبنا من بعض</p>
+        </div>
+        
+        <div class="percentage-display">
+            <div class="percentage" id="percentage">0%</div>
+        </div>
+        
+        <div class="bulb-container">
+            <div class="bulb" id="bulb"></div>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+        </div>
+        
+        <div class="amounts-display" id="amountsDisplay">
+            0$ / 0$
+        </div>
+        
+        <div class="input-group">
+            <label class="label" for="targetAmount">المبلغ الهدف ($)</label>
+            <input type="number" class="input" id="targetAmount" placeholder="مثال: 3500" min="0">
+        </div>
+        
+        <div class="input-group">
+            <label class="label" for="currentAmount">المبلغ الحالي ($)</label>
+            <input type="number" class="input" id="currentAmount" placeholder="مثال: 1200" min="0">
+        </div>
+        
+        <button class="button" onclick="updateProgress()">تحديث التقدم</button>
+        
+        <div class="custom-message-group">
+            <label class="label" for="customMessage">رسالة مخصصة عند الوصول لـ 100%</label>
+            <input type="text" class="input" id="customMessage" placeholder="اكتب رسالتك الخاصة هنا...">
+        </div>
+    </div>
+    
+    <div class="overlay" id="overlay"></div>
+    <div class="message-popup" id="messagePopup">
+        <div class="emoji" id="messageEmoji"></div>
+        <div class="text" id="messageText"></div>
+        <button class="close-btn" onclick="closeMessage()">إغلاق</button>
+    </div>
+
+    <script>
+        // تحميل البيانات المحفوظة
+        function loadData() {
+            const targetAmount = localStorage.getItem('targetAmount') || '';
+            const currentAmount = localStorage.getItem('currentAmount') || '';
+            const customMessage = localStorage.getItem('customMessage') || '';
+            const bulbState = localStorage.getItem('bulbState') || 'red';
+            const shownMessages = JSON.parse(localStorage.getItem('shownMessages') || '{}');
+            
+            document.getElementById('targetAmount').value = targetAmount;
+            document.getElementById('currentAmount').value = currentAmount;
+            document.getElementById('customMessage').value = customMessage;
+            
+            // تحديث حالة اللمبة
+            const bulb = document.getElementById('bulb');
+            bulb.className = `bulb ${bulbState}`;
+            
+            // تحديث التقدم
+            if (targetAmount && currentAmount) {
+                updateProgressDisplay(parseFloat(currentAmount), parseFloat(targetAmount));
+            }
+            
+            return shownMessages;
+        }
+        
+        // حفظ البيانات
+        function saveData() {
+            localStorage.setItem('targetAmount', document.getElementById('targetAmount').value);
+            localStorage.setItem('currentAmount', document.getElementById('currentAmount').value);
+            localStorage.setItem('customMessage', document.getElementById('customMessage').value);
+            
+            const bulb = document.getElementById('bulb');
+            let bulbState = 'red';
+            if (bulb.classList.contains('yellow')) bulbState = 'yellow';
+            if (bulb.classList.contains('green')) bulbState = 'green';
+            localStorage.setItem('bulbState', bulbState);
+        }
+        
+        // تحديث عرض التقدم
+        function updateProgressDisplay(current, target) {
+            const percentage = target > 0 ? Math.min((current / target) * 100, 100) : 0;
+            
+            document.getElementById('percentage').textContent = Math.round(percentage) + '%';
+            document.getElementById('progressFill').style.width = percentage + '%';
+            document.getElementById('amountsDisplay').textContent = `${current}$ / ${target}$`;
+            
+            // تحديث حالة اللمبة
+            const bulb = document.getElementById('bulb');
+            if (percentage >= 100) {
+                if (!bulb.classList.contains('yellow') && !bulb.classList.contains('green')) {
+                    bulb.className = 'bulb yellow';
+                }
+            } else {
+                bulb.className = 'bulb';
+            }
+            
+            // إضافة تأثير الاحتفال
+            if (percentage >= 100) {
+                document.getElementById('percentage').classList.add('celebration');
+                setTimeout(() => {
+                    document.getElementById('percentage').classList.remove('celebration');
+                }, 600);
+            }
+            
+            return percentage;
+        }
+        
+        // عرض الرسائل
+        function showMessage(emoji, text) {
+            document.getElementById('messageEmoji').textContent = emoji;
+            document.getElementById('messageText').textContent = text;
+            document.getElementById('overlay').classList.add('show');
+            document.getElementById('messagePopup').classList.add('show');
+        }
+        
+        // إغلاق الرسالة
+        function closeMessage() {
+            document.getElementById('overlay').classList.remove('show');
+            document.getElementById('messagePopup').classList.remove('show');
+        }
+        
+        // تحديث التقدم
+        function updateProgress() {
+            const targetAmount = parseFloat(document.getElementById('targetAmount').value) || 0;
+            const currentAmount = parseFloat(document.getElementById('currentAmount').value) || 0;
+            const customMessage = document.getElementById('customMessage').value;
+            
+            if (targetAmount <= 0) {
+                alert('يرجى إدخال مبلغ هدف صحيح');
+                return;
+            }
+            
+            if (currentAmount < 0) {
+                alert('المبلغ الحالي لا يمكن أن يكون سالباً');
+                return;
+            }
+            
+            const percentage = updateProgressDisplay(currentAmount, targetAmount);
+            
+            // حفظ البيانات
+            saveData();
+            
+            // التحقق من الرسائل
+            const shownMessages = JSON.parse(localStorage.getItem('shownMessages') || '{}');
+            
+            if (percentage >= 25 && percentage < 50 && !shownMessages['25']) {
+                showMessage('💙', 'بداية جميلة… استمر');
+                shownMessages['25'] = true;
+            } else if (percentage >= 50 && percentage < 75 && !shownMessages['50']) {
+                showMessage('✨', 'نصف الطريق! أنت تقترب');
+                shownMessages['50'] = true;
+            } else if (percentage >= 75 && percentage < 100 && !shownMessages['75']) {
+                showMessage('🌟', 'قريب جدًا… الحلم صار واضح');
+                shownMessages['75'] = true;
+            } else if (percentage >= 100 && !shownMessages['100']) {
+                const message = customMessage || 'الحمدلله… أصبحنا جاهزين';
+                showMessage('💛', message);
+                shownMessages['100'] = true;
+            }
+            
+            // إعادة تعيين الرسائل إذا انخفضت النسبة
+            if (percentage < 25) {
+                delete shownMessages['25'];
+                delete shownMessages['50'];
+                delete shownMessages['75'];
+                delete shownMessages['100'];
+            } else if (percentage < 50) {
+                delete shownMessages['50'];
+                delete shownMessages['75'];
+                delete shownMessages['100'];
+            } else if (percentage < 75) {
+                delete shownMessages['75'];
+                delete shownMessages['100'];
+            } else if (percentage < 100) {
+                delete shownMessages['100'];
+            }
+            
+            localStorage.setItem('shownMessages', JSON.stringify(shownMessages));
+        }
+        
+        // التعامل مع النقر على اللمبة
+        document.getElementById('bulb').addEventListener('click', function() {
+            const bulb = this;
+            const percentage = parseFloat(document.getElementById('percentage').textContent);
+            
+            if (percentage >= 100 && bulb.classList.contains('yellow')) {
+                bulb.className = 'bulb green';
+                showMessage('🎉', 'جاهز أبدأ الخطوة الرسمية بإذن الله');
+                saveData();
+            }
+        });
+        
+        // تحميل البيانات عند بدء التشغيل
+        window.addEventListener('load', loadData);
+        
+        // إغلاق الرسالة عند النقر على الخلفية
+        document.getElementById('overlay').addEventListener('click', closeMessage);
+    </script>
+</body>
+</html>
